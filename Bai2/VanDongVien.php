@@ -16,6 +16,11 @@ class VanDongVien extends ConNguoi
     public function  hienThiThongTin()
     {   
         $monDaThiDau = implode(" ,",$this->cacMonDaThiDau);
+        if ($this->gioiTinh == 1) {
+            $this->gioiTinh = 'Nam';
+        } else {
+            $this->gioiTinh = 'Nữ';
+        }
         return "
             Tên vận động viên: $this->ten,   <br>
             Giới tính: $this->gioiTinh,  <br>
@@ -29,10 +34,13 @@ class VanDongVien extends ConNguoi
     public function thiDau($monThiDau, $soHuyChuong)
     {
         if ($this->chieuCao < $monThiDau->dieuKienChieuCao || $this->canNang < $monThiDau->dieuKienCanNang) {
-            $this->soHuyChuong -= $soHuyChuong;
+            $totalMedal = $this->soHuyChuong -= $soHuyChuong;
+            if ($totalMedal < 0) {
+                $totalMedal = 0;
+            }
         }
         return "
-        Số huy chương: $this->soHuyChuong
+        Số huy chương: $totalMedal
         ";
     }
 }
